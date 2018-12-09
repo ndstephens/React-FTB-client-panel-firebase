@@ -59,22 +59,33 @@ class Clients extends Component {
             </thead>
 
             <tbody>
-              {clients.map(client => (
-                <tr key={client.id}>
-                  <td>
-                    {client.firstName} {client.lastName}
-                  </td>
-                  <td>{client.email}</td>
-                  <td>${parseFloat(client.balance).toFixed(2)}</td>
-                  <td>
-                    <Link
-                      to={`/client/${client.id}`}
-                      className="btn btn-secondary btn-sm">
-                      <i className="fas fa-arrow-circle-right" /> Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {clients
+                // Sort in alphabetical order first by first name
+                .sort((a, b) => {
+                  if (a.firstName.toLowerCase() < b.firstName.toLowerCase()) {
+                    return -1
+                  }
+                  if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
+                    return 1
+                  }
+                  return 0
+                })
+                .map(client => (
+                  <tr key={client.id}>
+                    <td>
+                      {client.firstName} {client.lastName}
+                    </td>
+                    <td>{client.email}</td>
+                    <td>${parseFloat(client.balance).toFixed(2)}</td>
+                    <td>
+                      <Link
+                        to={`/client/${client.id}`}
+                        className="btn btn-secondary btn-sm">
+                        <i className="fas fa-arrow-circle-right" /> Details
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
