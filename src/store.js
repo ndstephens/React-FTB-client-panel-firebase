@@ -34,9 +34,9 @@ firebase.initializeApp(firebaseConfig)
 const firestore = firebase.firestore()
 firestore.settings({ timestampsInSnapshots: true })
 // // Old:
-// const date = snapshot.get('created_at')
+// // const date = snapshot.get('created_at')
 // // New:
-// const date = snapshot.get('created_at').toDate()
+// // const date = snapshot.get('created_at').toDate()
 
 // Add reactReduxFirebase enhancer when making store creator
 const createStoreWithFirebase = compose(
