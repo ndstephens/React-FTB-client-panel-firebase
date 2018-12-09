@@ -25,6 +25,7 @@ class Clients extends Component {
     if (clients) {
       return (
         <div>
+          {/* HEADER */}
           <div className="row">
             <div className="col-md-6">
               <h2>
@@ -33,6 +34,8 @@ class Clients extends Component {
             </div>
             <div className="col-md-6">{/* total owed */}</div>
           </div>
+
+          {/* BODY / TABLE */}
           <table className="table table-striped">
             <thead className="thead-inverse">
               <tr>
@@ -42,6 +45,7 @@ class Clients extends Component {
                 <th />
               </tr>
             </thead>
+
             <tbody>
               {clients.map(client => (
                 <tr key={client.id}>
