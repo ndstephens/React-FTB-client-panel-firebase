@@ -51,7 +51,9 @@ class ClientDetails extends Component {
     const { client } = this.props
     const { showBalanceUpdateInput, balanceUpdateAmount } = this.state
 
-    if (client) {
+    if (!client) {
+      return <Spinner />
+    } else {
       return (
         <div>
           {/* HEADER */}
@@ -155,8 +157,6 @@ class ClientDetails extends Component {
           </div>
         </div>
       )
-    } else {
-      return <Spinner />
     }
   }
 }
