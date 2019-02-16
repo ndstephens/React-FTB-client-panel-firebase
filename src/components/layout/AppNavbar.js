@@ -10,11 +10,13 @@ class AppNavbar extends Component {
             ClientPanel
           </Link>
 
+          {/* 'hamburger' menu button for narrow screens */}
           <button
             className="navbar-toggler"
             type="button"
             data-toggle="collapse"
-            data-target="#navbarMain">
+            data-target="#navbarMain"
+          >
             <span className="navbar-toggler-icon" />
           </button>
 
