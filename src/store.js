@@ -5,8 +5,8 @@ import { reduxFirestore, firestoreReducer } from 'redux-firestore'
 //* Instead of "import firebase from 'firebase'"...only import what you need
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/database'
 import 'firebase/firestore'
+// import 'firebase/database'
 // import 'firebase/storage'
 
 //? import custom REDUCERS
