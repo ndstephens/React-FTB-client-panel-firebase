@@ -5,32 +5,22 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 
+import { formatMoney } from '../../helpers'
+
 import Spinner from '../layout/Spinner'
 
 class Clients extends Component {
-  state = {
-    totalOwed: null,
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    const { clients } = props
-    if (clients) {
-      // Add balances
-      const total = clients.reduce((total, client) => {
-        return total + parseFloat(client.balance.toString())
-      }, 0)
-      return { totalOwed: total }
-    }
-    return null
-  }
-
   render() {
     const { clients } = this.props
-    const { totalOwed } = this.state
 
     if (!clients) {
       return <Spinner />
     }
+
+    const totalOwed = clients.reduce(
+      (total, client) => total + client.balance,
+      0,
+    )
 
     return (
       <div>
@@ -46,9 +36,7 @@ class Clients extends Component {
           <div className="col-md-6">
             <h5 className="text-right text-secondary">
               Total Owed:{' '}
-              <span className="text-primary">
-                ${parseFloat(totalOwed).toFixed(2)}
-              </span>
+              <span className="text-primary">{formatMoney(totalOwed)}</span>
             </h5>
           </div>
         </div>
@@ -67,34 +55,23 @@ class Clients extends Component {
 
           {/* TABLE__BODY */}
           <tbody>
-            {clients
-              // Sort in alphabetical order by first name
-              .sort((a, b) => {
-                if (a.firstName.toLowerCase() < b.firstName.toLowerCase()) {
-                  return -1
-                }
-                if (a.firstName.toLowerCase() > b.firstName.toLowerCase()) {
-                  return 1
-                }
-                return 0
-              })
-              .map(client => (
-                <tr key={client.id}>
-                  <td>
-                    {client.firstName} {client.lastName}
-                  </td>
-                  <td>{client.email}</td>
-                  <td>${parseFloat(client.balance).toFixed(2)}</td>
-                  <td>
-                    <Link
-                      to={`/client/${client.id}`}
-                      className="btn btn-secondary btn-sm"
-                    >
-                      <i className="fas fa-arrow-circle-right" /> Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+            {clients.map(client => (
+              <tr key={client.id}>
+                <td>
+                  {client.firstName} {client.lastName}
+                </td>
+                <td>{client.email}</td>
+                <td>{formatMoney(client.balance)}</td>
+                <td>
+                  <Link
+                    to={`/client/${client.id}`}
+                    className="btn btn-secondary btn-sm"
+                  >
+                    <i className="fas fa-arrow-circle-right" /> Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -108,8 +85,8 @@ Clients.propTypes = {
 }
 
 export default compose(
-  firestoreConnect([{ collection: 'clients' }]),
-  connect((state, props) => ({
+  firestoreConnect([{ collection: 'clients', orderBy: 'firstName' }]),
+  connect(state => ({
     clients: state.firestore.ordered.clients,
   })),
 )(Clients)
