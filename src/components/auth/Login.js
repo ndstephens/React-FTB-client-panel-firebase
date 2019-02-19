@@ -22,7 +22,7 @@ class Login extends Component {
         email,
         password,
       })
-      .catch(err => alert('Invalid Login Creds'))
+      .catch(err => alert('Invalid Login Credentials'))
   }
 
   render() {
@@ -31,34 +31,43 @@ class Login extends Component {
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">
+              {/* Login Header */}
               <h1 className="text-center pb-4 pt-3">
                 <span className="text-primary">
                   <i className="fas fa-lock" /> Login
                 </span>
               </h1>
+              {/* Form Body */}
               <form onSubmit={this.onSubmit}>
+                {/* Email Input */}
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
                   <input
-                    type="text"
+                    autoFocus
+                    type="email"
                     className="form-control"
                     name="email"
+                    id="email"
                     required
                     value={this.state.email}
                     onChange={this.onChange}
                   />
                 </div>
+                {/* Password Input */}
                 <div className="form-group">
                   <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     className="form-control"
                     name="password"
+                    id="password"
                     required
                     value={this.state.password}
                     onChange={this.onChange}
                   />
                 </div>
+
+                {/* Login submit Button */}
                 <input
                   type="submit"
                   value="Login"
