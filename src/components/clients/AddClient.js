@@ -107,6 +107,7 @@ class AddClient extends Component {
                   id="phone"
                   required
                   minLength={12}
+                  placeholder="XXX-XXX-XXXX"
                   onChange={this.handlePhone}
                   value={this.state.phone}
                 />
@@ -119,6 +120,7 @@ class AddClient extends Component {
                   className="form-control"
                   name="balance"
                   id="balance"
+                  placeholder="Please include a balance"
                   onChange={this.onChange}
                   value={this.state.balance}
                 />
