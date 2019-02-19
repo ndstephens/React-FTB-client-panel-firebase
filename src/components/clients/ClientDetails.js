@@ -116,7 +116,7 @@ class ClientDetails extends Component {
                   {/* clicking pencil icon toggles boolean value of 'showBalanceUpdateInput' in local state, which controls display of input form for editing balance (seen below)*/}
                   <small
                     onClick={this.toggleBalanceUpdateInput}
-                    style={{ color: 'blue', cursor: 'pointer' }}
+                    style={{ color: 'var(--primary)', cursor: 'pointer' }}
                   >
                     <i className="fas fa-pencil-alt" />
                   </small>
