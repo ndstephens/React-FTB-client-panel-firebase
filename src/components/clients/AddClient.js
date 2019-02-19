@@ -5,26 +5,36 @@ import PropTypes from 'prop-types'
 // import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 
+import { formatPhone } from '../../helpers'
+
 class AddClient extends Component {
   state = {
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    balance: '',
+    balance: 0,
   }
 
-  onChange = e => this.setState({ [e.target.name]: e.target.value })
+  handlePhone = e =>
+    this.setState({ phone: formatPhone(e.target.value.trimLeft()) })
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value.trimLeft() })
 
   onSubmit = e => {
     e.preventDefault()
     const { firestore, history } = this.props
 
-    const newClient = { ...this.state }
-    // If no balance, make it '0'
-    if (newClient.balance === '') newClient.balance = 0
+    const newClient = {
+      firstName: this.state.firstName.trim(),
+      lastName: this.state.lastName.trim(),
+      email: this.state.email.trim(),
+      phone: this.state.phone.trim(),
+      balance: Math.round((this.state.balance || 0) * 100),
+      // Convert to whole cents
+    }
 
-    // Add 'newClient' to firestore and redirect to the home page
+    // Add 'newClient' to Firestore and redirect to the home page
     firestore
       .add({ collection: 'clients' }, newClient)
       .then(() => history.push('/'))
@@ -33,6 +43,7 @@ class AddClient extends Component {
   render() {
     return (
       <div>
+        {/* Back Button */}
         <div className="row mb-3">
           <div className="col-md-6">
             <Link to="/" className="btn btn-link">
@@ -41,72 +52,79 @@ class AddClient extends Component {
           </div>
         </div>
 
+        {/* Add Client FORM */}
         <div className="card">
           <div className="card-header">Add Client</div>
           <div className="card-body">
             <form onSubmit={this.onSubmit}>
+              {/* First Name */}
               <div className="form-group">
                 <label htmlFor="firstName">First Name</label>
                 <input
+                  autoFocus
                   type="text"
                   className="form-control"
                   name="firstName"
-                  minLength="2"
+                  id="firstName"
                   required
                   onChange={this.onChange}
                   value={this.state.firstName}
                 />
               </div>
-
+              {/* Last Name */}
               <div className="form-group">
                 <label htmlFor="lastName">Last Name</label>
                 <input
                   type="text"
                   className="form-control"
                   name="lastName"
-                  minLength="2"
+                  id="lastName"
                   required
                   onChange={this.onChange}
                   value={this.state.lastName}
                 />
               </div>
-
+              {/* Email */}
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   className="form-control"
                   name="email"
+                  id="email"
                   required
                   onChange={this.onChange}
                   value={this.state.email}
                 />
               </div>
-
+              {/* Phone Number */}
               <div className="form-group">
                 <label htmlFor="phone">Phone</label>
                 <input
-                  type="text"
+                  type="tel"
                   className="form-control"
                   name="phone"
-                  minLength="10"
+                  id="phone"
                   required
-                  onChange={this.onChange}
+                  minLength={12}
+                  onChange={this.handlePhone}
                   value={this.state.phone}
                 />
               </div>
-
+              {/* Balance */}
               <div className="form-group">
                 <label htmlFor="balance">Balance</label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="balance"
+                  id="balance"
                   onChange={this.onChange}
                   value={this.state.balance}
                 />
               </div>
 
+              {/* Form Submit Button */}
               <input
                 type="submit"
                 value="Submit"
