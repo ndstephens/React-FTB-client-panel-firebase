@@ -31,10 +31,10 @@ class AddClient extends Component {
       email: this.state.email.trim(),
       phone: this.state.phone.trim(),
       balance: Math.round((this.state.balance || 0) * 100),
-      // Convert to whole cents
+      //* Convert to whole cents
     }
 
-    // Add 'newClient' to Firestore and redirect to the home page
+    //* Add 'newClient' to Firestore and redirect to the home page
     firestore
       .add({ collection: 'clients' }, newClient)
       .then(() => history.push('/'))
