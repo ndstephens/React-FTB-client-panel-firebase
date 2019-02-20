@@ -1,6 +1,7 @@
 import { createStore, combineReducers, compose } from 'redux'
 import { reactReduxFirebase, firebaseReducer } from 'react-redux-firebase'
 import { reduxFirestore, firestoreReducer } from 'redux-firestore'
+import { devToolsEnhancer } from 'redux-devtools-extension'
 
 //* Instead of "import firebase from 'firebase'"...only import what you need
 import firebase from 'firebase/app'
@@ -61,10 +62,7 @@ const initialState = { settings: JSON.parse(localStorage.getItem('settings')) }
 const store = createStoreWithFirebase(
   reducers,
   initialState,
-  compose(
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__(),
-  ),
+  devToolsEnhancer(),
 )
 
 export default store
