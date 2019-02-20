@@ -5,13 +5,18 @@ import {
 } from '../actions/types'
 
 const initialState = {
+  allowRegistration: false,
   disableBalanceOnAdd: true,
   disableBalanceOnEdit: false,
-  allowRegistration: false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ALLOW_REGISTRATION:
+      return {
+        ...state,
+        allowRegistration: !state.allowRegistration,
+      }
     case DISABLE_BALANCE_ON_ADD:
       return {
         ...state,
@@ -21,11 +26,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         disableBalanceOnEdit: !state.disableBalanceOnEdit,
-      }
-    case ALLOW_REGISTRATION:
-      return {
-        ...state,
-        allowRegistration: !state.allowRegistration,
       }
     default:
       return state
