@@ -10,6 +10,7 @@ import 'firebase/firestore'
 // import 'firebase/storage'
 
 //? import custom REDUCERS
+import settingsReducer from './reducers/settingsReducer'
 
 //* Init Firebase App instance
 firebase.initializeApp({
@@ -40,6 +41,7 @@ const createStoreWithFirebase = compose(
 const reducers = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
+  settings: settingsReducer,
 })
 //? Create initial state
 const initialState = {}
