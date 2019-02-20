@@ -18,7 +18,7 @@ const Settings = props => {
   } = props
 
   return (
-    <React.Fragment>
+    <Fragment>
       {/* Back To Dashboard BUTTON */}
       <div className="row">
         <div className="col-md-6">
@@ -75,7 +75,7 @@ const Settings = props => {
           </form>
         </div>
       </div>
-    </React.Fragment>
+    </Fragment>
   )
 }
 
