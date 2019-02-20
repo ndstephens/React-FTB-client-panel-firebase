@@ -43,7 +43,7 @@ class EditClient extends Component {
   }
 
   render() {
-    const { client } = this.props
+    const { client, disableBalanceOnEdit } = this.props
 
     if (!client) {
       return <Spinner />
@@ -131,6 +131,7 @@ class EditClient extends Component {
                   placeholder="Please include a balance"
                   ref={this.balanceInput}
                   defaultValue={(client.balance / 100).toFixed(2)}
+                  disabled={disableBalanceOnEdit}
                 />
               </div>
 
@@ -151,13 +152,15 @@ class EditClient extends Component {
 EditClient.propTypes = {
   firestore: PropTypes.object.isRequired,
   client: PropTypes.object,
+  disableBalanceOnEdit: PropTypes.bool.isRequired,
 }
 
 export default compose(
   firestoreConnect(props => [
     { collection: 'clients', storeAs: 'client', doc: props.match.params.id },
   ]),
-  connect(({ firestore: { ordered } }) => ({
+  connect(({ firestore: { ordered }, settings: { disableBalanceOnEdit } }) => ({
     client: ordered.client && ordered.client[0],
+    disableBalanceOnEdit,
   })),
 )(EditClient)

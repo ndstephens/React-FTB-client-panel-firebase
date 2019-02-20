@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-// import { compose } from 'redux'
-// import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import { formatPhone } from '../../helpers'
@@ -41,6 +41,8 @@ class AddClient extends Component {
   }
 
   render() {
+    const { disableBalanceOnAdd } = this.props
+
     return (
       <div>
         {/* Back Button */}
@@ -123,6 +125,7 @@ class AddClient extends Component {
                   placeholder="Please include a balance"
                   onChange={this.onChange}
                   value={this.state.balance}
+                  disabled={disableBalanceOnAdd}
                 />
               </div>
 
@@ -142,6 +145,12 @@ class AddClient extends Component {
 
 AddClient.propTypes = {
   firestore: PropTypes.object.isRequired,
+  disableBalanceOnAdd: PropTypes.bool.isRequired,
 }
 
-export default firestoreConnect()(AddClient)
+export default compose(
+  firestoreConnect(),
+  connect(state => ({
+    disableBalanceOnAdd: state.settings.disableBalanceOnAdd,
+  })),
+)(AddClient)

@@ -20,7 +20,7 @@ class AppNavbar extends Component {
   }
 
   render() {
-    const { auth } = this.props
+    const { auth, allowRegistration } = this.props
 
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-primary mb-4">
@@ -57,7 +57,7 @@ class AppNavbar extends Component {
               ) : null}
             </ul>
 
-            {/* Links only visible when user is logged in */}
+            {/* Links only visible when logged in */}
             {auth.uid ? (
               <ul className="navbar-nav ml-auto">
                 {/* display user's email address */}
@@ -84,6 +84,21 @@ class AppNavbar extends Component {
                 </li>
               </ul>
             ) : null}
+            {/* Links only visible when NOT logged in AND 'allowRegistration is 'true' */}
+            {allowRegistration && !auth.uid ? (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link">
+                    Register
+                  </Link>
+                </li>
+              </ul>
+            ) : null}
           </div>
         </div>
       </nav>
@@ -94,11 +109,13 @@ class AppNavbar extends Component {
 AppNavbar.propTypes = {
   firebase: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  allowRegistration: PropTypes.bool.isRequired,
 }
 
 export default compose(
   firebaseConnect(),
   connect(state => ({
     auth: state.firebase.auth,
+    allowRegistration: state.settings.allowRegistration,
   })),
 )(AppNavbar)
