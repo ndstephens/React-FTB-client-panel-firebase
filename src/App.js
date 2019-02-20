@@ -7,11 +7,12 @@ import store from './store'
 // import './App.css'
 
 import AppNavbar from './components/layout/AppNavbar'
-import Dashboard from './components/layout/Dashboard'
 import Login from './components/auth/Login'
+import Dashboard from './components/layout/Dashboard'
 import AddClient from './components/clients/AddClient'
 import ClientDetails from './components/clients/ClientDetails'
 import EditClient from './components/clients/EditClient'
+import Settings from './components/settings/Settings'
 
 class App extends Component {
   render() {
@@ -24,13 +25,13 @@ class App extends Component {
               <Switch>
                 <Route
                   exact
-                  path="/"
-                  component={UserIsAuthenticated(Dashboard)}
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
                 />
                 <Route
                   exact
-                  path="/login"
-                  component={UserIsNotAuthenticated(Login)}
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
                 />
                 <Route
                   exact
@@ -46,6 +47,11 @@ class App extends Component {
                   exact
                   path="/client/edit/:id"
                   component={UserIsAuthenticated(EditClient)}
+                />
+                <Route
+                  exact
+                  path="/settings"
+                  component={UserIsAuthenticated(Settings)}
                 />
               </Switch>
             </div>
