@@ -6,7 +6,7 @@ Demo app for keeping track of clients and remaining balance still owed on their 
 
 Uses Redux for local state, Firebase for authentication and hosting, and Firestore for client data storage.  Bootstrap for styling.
 
-View [working demo](https://client-panel-redux-nds.firebaseapp.com/)
+### View [working demo](https://client-panel-redux-nds.firebaseapp.com/)
 
 **Login using**
 > test@email.com
